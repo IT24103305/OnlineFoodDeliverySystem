@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="OnlineFoodDeliverySystem">
+    <output-path>$PROJECT_DIR$/out/artifacts/OnlineFoodDeliverySystem</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="OnlineFoodDeliverySystem" />
+          <element id="dir-copy" path="$PROJECT_DIR$/WebContent" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Java EE 6-Java EE 6" />
+        </element>
+      </element>
+      <element id="file-copy" path="$PROJECT_DIR$/OnlineFoodDeliverySystem.iml" />
+      <element id="module-output" name="OnlineFoodDeliverySystem" />
+      <element id="module-source" name="OnlineFoodDeliverySystem" />
+      <element id="dir-copy" path="$PROJECT_DIR$/out" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src" />
+      <element id="javaee-facet-resources" facet="OnlineFoodDeliverySystem/web/Web" />
+    </root>
+  </artifact>
+</component>

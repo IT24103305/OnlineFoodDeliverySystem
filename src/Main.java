@@ -1,15 +1,30 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import user_manager.AuthenticationService;
+import user_manager.User;
+import user_manager.FileHandler;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.println("Hello and welcome!");
+        // Initialize FileHandler and append a test user record, if not already added
+        FileHandler fileHandler = new FileHandler("users.txt");
+        // Uncomment the following line if you want to add a test record
+        // fileHandler.appendLine("U001,Hansaja,hansaja@example.com,SecurePass123");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        // Initialize AuthenticationService
+        AuthenticationService authService = new AuthenticationService();
+
+        // Test authentication with correct credentials
+        User user = authService.authenticate("hansaja@example.com", "SecurePass123");
+        if (user != null) {
+            System.out.println("Logged in user: " + user);
+        }
+
+        // Test logging out
+        authService.logout(user);
+
+        // Test authentication with wrong credentials
+        User invalidUser = authService.authenticate("hansaja@example.com", "WrongPassword");
+        if (invalidUser == null) {
+            System.out.println("No valid user found with provided credentials.");
         }
     }
 }

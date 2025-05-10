@@ -1,0 +1,86 @@
+<!-- payment_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Form</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f3f3f3;
+          padding: 30px;
+        }
+
+        .payment-container {
+          max-width: 400px;
+          margin: auto;
+          background: white;
+          padding: 25px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+          text-align: center;
+          color: #333;
+        }
+
+        label {
+          font-weight: bold;
+          display: block;
+          margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="month"] {
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+        }
+
+        button {
+          margin-top: 15px;
+          width: 100%;
+          padding: 10px;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        button:hover {
+          background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-container">
+    <h2>Payment Form</h2>
+    <form>
+        <label>Customer Name:</label>
+        <input type="text" placeholder="Enter your name">
+
+        <label>Card Number:</label>
+        <input type="text" placeholder="xxxx-xxxx-xxxx-xxxx">
+
+        <label>Expiration Date:</label>
+        <input type="month">
+
+        <label>CVV:</label>
+        <input type="number" placeholder="123">
+
+        <label>Total Amount ($):</label>
+        <input type="number" placeholder="00.00">
+
+        <button type="submit">Pay Now</button>
+    </form>
+</div>
+
+</body>
+</html>

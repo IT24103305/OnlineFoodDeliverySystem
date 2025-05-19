@@ -38,7 +38,7 @@
 </div>
 
 <footer>
-    &copy; 2025 Food Delivery App. All rights reserved.
+    © 2025 Food Delivery App. All rights reserved.
 </footer>
 </body>
 </html>

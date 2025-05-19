@@ -40,8 +40,4 @@ public class Delivery {
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
     }
-
-    public boolean canCancel() {
-        return !cancelled && LocalDateTime.now().isBefore(orderTime.plusMinutes(10));
-    }
 }

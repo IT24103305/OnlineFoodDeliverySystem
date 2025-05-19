@@ -1,7 +1,7 @@
 package com.fooddelivery.model;
 
 public abstract class Person {
-    private String name;
+    protected String name;
 
     public Person(String name) {
         this.name = name;

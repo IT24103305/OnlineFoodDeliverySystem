@@ -42,7 +42,7 @@
             <p>Cancellation is no longer available (more than 10 minutes have passed).</p>
         </c:if>
     </c:if>
-    <a href="${pageContext.request.contextPath}/jsp/adminDelivery.jsp">Click here to pay</a>
+    <a href="${pageContext.request.contextPath}/jsp/adminDelivery.jsp">Click Here to Pay</a>
 </div>
 </body>
 </html>

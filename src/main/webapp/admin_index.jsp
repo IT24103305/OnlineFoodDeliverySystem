@@ -7,19 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page session="true" %>
-<%
-    String role = (String) session.getAttribute("role");
-    if (!"admin".equals(role)) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-    String username = (String) session.getAttribute("username");
 
-%>
 <!DOCTYPE html>
 <html>
 <head>
-    <h1>Welcome, Admin <%= username %> 🛠️</h1>
+    <h1>Welcome, Admin  🛠️</h1>
     <title>Admin | SunBite</title>
     <link rel="stylesheet" href="css/home.css">
 </head>

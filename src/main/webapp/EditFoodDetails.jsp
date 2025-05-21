@@ -9,11 +9,7 @@
 <%@ page import="model.FoodItem, controller.FoodManager" %>
 
 <%
-    String role = (String) session.getAttribute("role");
-    if (!"admin".equals(role)) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
+
 
     String foodId = request.getParameter("foodId");
     FoodItem item = FoodManager.getFoodById(foodId); // you must implement this

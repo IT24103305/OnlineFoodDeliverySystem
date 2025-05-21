@@ -8,12 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="controller.FoodManager" %>
 
-<%
-    String role = (String) session.getAttribute("role");
-    if (!"admin".equals(role)) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
 
     String foodId = request.getParameter("foodId");
     if (foodId != null) {

@@ -9,12 +9,7 @@
 <%@ page import="java.util.*, model.FoodItem, controller.FoodManager" %>
 
 <%
-    // Session check
-    String role = (String) session.getAttribute("role");
-    if (!"admin".equals(role)) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
+
 
     String username = (String) session.getAttribute("username");
     List<FoodItem> foodList = FoodManager.getAllFoodItems();

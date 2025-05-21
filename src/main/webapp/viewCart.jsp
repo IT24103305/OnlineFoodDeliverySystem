@@ -6,11 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="java.util.*" %>
-<%
-    String username = (String) session.getAttribute("username");
-    String role = (String) session.getAttribute("role");
-    List<Map<String, Object>> cart = (List<Map<String, Object>>) session.getAttribute("cart");
-%>
 
 <!DOCTYPE html> <html> <head> <title>My Cart</title> <style>
     body { font-family: sans-serif; padding: 20px; }

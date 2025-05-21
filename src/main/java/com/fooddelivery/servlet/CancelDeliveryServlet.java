@@ -21,24 +21,28 @@ public class CancelDeliveryServlet extends HttpServlet {
             delivery_ID = Integer.parseInt(delivery_IDStr);
         } catch (NumberFormatException e) {
             System.out.println("CancelDeliveryServlet: Invalid delivery_ID format: " + delivery_IDStr);
-            response.sendRedirect("viewDelivery?delivery_ID=" + delivery_IDStr);
+            request.setAttribute("error", "Invalid delivery ID.");
+            request.getRequestDispatcher("/jsp/viewDelivery.jsp").forward(request, response);
             return;
         }
 
         List<Delivery> deliveries = (List<Delivery>) request.getSession().getServletContext().getAttribute("deliveries");
         if (deliveries == null) {
             System.out.println("CancelDeliveryServlet: No deliveries found in servlet context.");
-            response.sendRedirect("viewDelivery?delivery_ID=" + delivery_ID);
+            request.setAttribute("error", "No deliveries found.");
+            request.getRequestDispatcher("/jsp/viewDelivery.jsp").forward(request, response);
             return;
         }
 
+        boolean deliveryFound = false;
         for (Delivery delivery : deliveries) {
             if (delivery.getDelivery_ID() == delivery_ID) {
+                deliveryFound = true;
                 LocalDateTime currentTime = LocalDateTime.now();
                 LocalDateTime cutoffTime = delivery.getOrderTime().plusMinutes(10);
                 System.out.println("CancelDeliveryServlet: Current Time=" + currentTime + ", Order Time=" + delivery.getOrderTime() +
                         ", Cutoff Time=" + cutoffTime);
-                if (currentTime.isBefore(cutoffTime)) {
+                if (currentTime.isBefore(cutoffTime) && delivery.getStatus().equals("Active")) {
                     delivery.setStatus("Cancelled");
                     System.out.println("CancelDeliveryServlet: Delivery cancelled, delivery_ID=" + delivery_ID);
                     // Log the cancellation to deliveries.txt
@@ -54,13 +58,23 @@ public class CancelDeliveryServlet extends HttpServlet {
                         System.out.println("CancelDeliveryServlet: Error writing to deliveries.txt: " + e.getMessage());
                         throw new ServletException("Failed to log cancellation", e);
                     }
+                    // Set delivery attribute for cancelDelivery.jsp
+                    request.setAttribute("delivery", delivery);
+                    request.getRequestDispatcher("/jsp/cancelDelivery.jsp").forward(request, response);
                 } else {
-                    System.out.println("CancelDeliveryServlet: Cancellation not allowed, time exceeded for delivery_ID=" + delivery_ID);
+                    System.out.println("CancelDeliveryServlet: Cancellation not allowed, time exceeded or delivery not active for delivery_ID=" + delivery_ID);
+                    request.setAttribute("error", "Cancellation not allowed: More than 10 minutes have passed or delivery is not active.");
+                    request.setAttribute("delivery", delivery);
+                    request.getRequestDispatcher("/jsp/viewDelivery.jsp").forward(request, response);
                 }
-                break;
+                return;
             }
         }
 
-        response.sendRedirect("viewDelivery?delivery_ID=" + delivery_ID);
+        if (!deliveryFound) {
+            System.out.println("CancelDeliveryServlet: Delivery not found for delivery_ID=" + delivery_ID);
+            request.setAttribute("error", "Delivery not found.");
+            request.getRequestDispatcher("/jsp/viewDelivery.jsp").forward(request, response);
+        }
     }
 }

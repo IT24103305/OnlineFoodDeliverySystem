@@ -19,7 +19,7 @@
 <div class="container">
     <h2>Delivery Details</h2>
     <c:if test="${not empty error}">
-        <p style="color: #FF4444;">${error}</p>
+        <p style="color: #FF4444; font-weight: bold;">${error}</p>
     </c:if>
     <c:if test="${delivery == null}">
         <p>Delivery not found.</p>
@@ -35,16 +35,17 @@
         <c:if test="${canCancel}">
             <form action="cancelDelivery" method="post">
                 <input type="hidden" name="delivery_ID" value="${delivery.delivery_ID}">
-                <button type="submit">Cancel Delivery</button>
+                <button type="submit" class="submit-btn">Cancel Delivery</button>
             </form>
         </c:if>
         <c:if test="${isAfterCutoff && delivery.status == 'Active'}">
-            <p>Cancellation is no longer available (more than 10 minutes have passed).</p>
+            <p style="color: #FF4444;">Cancellation is no longer available (more than 10 minutes have passed).</p>
         </c:if>
     </c:if>
-    <a href="${pageContext.request.contextPath}/jsp/createDelivery.jsp">Create New Delivery</a>
-    <br>
-    <a href="${pageContext.request.contextPath}/jsp/adminDelivery.jsp">Admin Panel</a>
+    <div class="footer-links">
+        <a href="${pageContext.request.contextPath}/jsp/adminDelivery.jsp" class="order-now-btn">Click Here to Pay</a>
+        <a href="${pageContext.request.contextPath}/" class="order-now-btn">Back to SunBite Home</a>
+    </div>
 </div>
 </body>
 </html>

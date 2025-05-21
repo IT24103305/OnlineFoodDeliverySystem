@@ -17,7 +17,7 @@
 </header>
 <div class="container">
     <p class="welcome-message">Explore our menu and enjoy delicious meals delivered to your door.</p>
-    <a href="${pageContext.request.contextPath}/jsp/createDelivery.jsp" class="order-now-btn">Order Now</a>
+    <a href="${pageContext.request.contextPath}/jsp/createDelivery.jsp" class="order-now-btn">Delivery Now</a>
     <br>
     <a href="${pageContext.request.contextPath}/jsp/adminDelivery.jsp">Admin Panel</a>
 </div>

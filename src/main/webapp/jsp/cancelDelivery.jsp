@@ -23,12 +23,15 @@
         <p>Delivery ID: ${delivery.delivery_ID}</p>
         <p>Order ID: ${delivery.order_ID}</p>
         <p>Customer: ${delivery.customer.name}</p>
+        <c:if test="${not empty error}">
+            <p style="color: #FF4444;">${error}</p>
+        </c:if>
     </c:if>
     <c:if test="${delivery == null}">
         <p style="color: #FF4444;">Error: Delivery information not available.</p>
     </c:if>
     <div class="footer-links">
-        <a href="${pageContext.request.contextPath}/" class="order-now-btn">Back to SunBite Home</a>
+        <button onclick="window.location.href='${pageContext.request.contextPath}/'" class="order-now-btn">Back to SunBite Home</button>
     </div>
 </div>
 </body>

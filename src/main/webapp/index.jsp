@@ -22,4 +22,4 @@
     <a href="${pageContext.request.contextPath}/jsp/adminDelivery.jsp">Admin Panel</a>
 </div>
 </body>
-</html>j
+</html>

@@ -34,15 +34,15 @@ public class CancelDeliveryServlet extends HttpServlet {
             return;
         }
 
-        boolean deliveryFound = false;
+        Delivery targetDelivery = null;
         for (Delivery delivery : deliveries) {
             if (delivery.getDelivery_ID() == delivery_ID) {
-                deliveryFound = true;
+                targetDelivery = delivery;
                 LocalDateTime currentTime = LocalDateTime.now();
                 LocalDateTime cutoffTime = delivery.getOrderTime().plusMinutes(10);
                 System.out.println("CancelDeliveryServlet: Current Time=" + currentTime + ", Order Time=" + delivery.getOrderTime() +
                         ", Cutoff Time=" + cutoffTime);
-                if (currentTime.isBefore(cutoffTime) && delivery.getStatus().equals("Active")) {
+                if (currentTime.isBefore(cutoffTime)) {
                     delivery.setStatus("Cancelled");
                     System.out.println("CancelDeliveryServlet: Delivery cancelled, delivery_ID=" + delivery_ID);
                     // Log the cancellation to deliveries.txt
@@ -58,20 +58,18 @@ public class CancelDeliveryServlet extends HttpServlet {
                         System.out.println("CancelDeliveryServlet: Error writing to deliveries.txt: " + e.getMessage());
                         throw new ServletException("Failed to log cancellation", e);
                     }
-                    // Set delivery attribute for cancelDelivery.jsp
-                    request.setAttribute("delivery", delivery);
-                    request.getRequestDispatcher("/jsp/cancelDelivery.jsp").forward(request, response);
                 } else {
-                    System.out.println("CancelDeliveryServlet: Cancellation not allowed, time exceeded or delivery not active for delivery_ID=" + delivery_ID);
-                    request.setAttribute("error", "Cancellation not allowed: More than 10 minutes have passed or delivery is not active.");
-                    request.setAttribute("delivery", delivery);
-                    request.getRequestDispatcher("/jsp/viewDelivery.jsp").forward(request, response);
+                    System.out.println("CancelDeliveryServlet: Cancellation not allowed, time exceeded for delivery_ID=" + delivery_ID);
+                    request.setAttribute("error", "Cancellation not allowed: Time limit exceeded.");
                 }
-                return;
+                break;
             }
         }
 
-        if (!deliveryFound) {
+        if (targetDelivery != null) {
+            request.setAttribute("delivery", targetDelivery);
+            request.getRequestDispatcher("/jsp/cancelDelivery.jsp").forward(request, response);
+        } else {
             System.out.println("CancelDeliveryServlet: Delivery not found for delivery_ID=" + delivery_ID);
             request.setAttribute("error", "Delivery not found.");
             request.getRequestDispatcher("/jsp/viewDelivery.jsp").forward(request, response);

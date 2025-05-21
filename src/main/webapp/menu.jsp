@@ -5,45 +5,49 @@
   Time: 9:15 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="model.FoodItem, controller.FoodManager, java.util.*" %>
+<%@ page import="java.util.*, model.FoodItem, model.FoodManager" %>
 <%
-    String selectedCategory = request.getParameter("category");
     List<FoodItem> foodList = FoodManager.getAllFoodItems();
+    String category = request.getParameter("category");
 %>
-
-<!DOCTYPE html> <html>
-<head>
-    <title>Menu - SunBite</title>
-    <link rel="stylesheet" href="menu.css">
+<html>
+<head><title>Menu - SunBite</title>
+    <link rel="stylesheet" href="css/menu.css">
 </head>
-<body> <h1 class="title">Menu</h1>
-<div class="category-tabs">
-    <a href="menu.jsp">All</a>
+<body>
+<div style="text-align: right; padding: 10px;">
+    <a href="admin_index.jsp" style="padding: 8px 16px; background-color: #0077cc; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;">Admin Login</a>
+</div>
+
+<h1 class="menu-title">Menu</h1>
+<div class="category-buttons">
+    <a href="menu.jsp?category=All">All</a>
     <a href="menu.jsp?category=Koththu">Koththu</a>
     <a href="menu.jsp?category=Pasta">Pasta</a>
     <a href="menu.jsp?category=Pizza">Pizza</a>
     <a href="menu.jsp?category=Drinks">Drinks</a>
     <a href="menu.jsp?category=Fried Rice">Fried Rice</a>
-</div> <div class="menu-container">
+</div>
+<div class="menu-container">
     <%
         for (FoodItem item : foodList) {
-            if (selectedCategory == null || selectedCategory.equalsIgnoreCase("All") || selectedCategory.equalsIgnoreCase(item.getCategory())) {
+            if (category == null || category.equals("All") || item.getCategory().equalsIgnoreCase(category)) {
     %>
-
     <div class="card"> <img src="images/<%= item.getFoodId() %>.jpg" alt="<%= item.getName() %>">
         <div
-            class="info"> <h3><%= item.getName() %></h3>
-        <p><%= item.getDescription() %></p>
+                class="info"> <h3><%= item.getName() %></h3>
+            <p><%= item.getDescription() %></p>
             <p class="price">LKR <%= item.getPrice() %></p>
-        <form action="AddToCart" method="post">
-            <input type="hidden" name="foodId" value="<%= item.getFoodId() %>">
-            <input type="hidden" name="name" value="<%= item.getName() %>">
-            <input type="hidden" name="price" value="<%= item.getPrice() %>">
-            <input type="number" name="quantity" value="1" min="1" required>
-            <input type="submit" value="Add to Cart">
-    </form>
+        </div>
+        <div class="item-info">
+            <h3><%= item.getName() %></h3>
+            <p><%= item.getDescription() %></p>
+            <p class="price">LKR <%= item.getPrice() %></p>
+        </div>
     </div>
-    </div> <% } } %>
+    <%  }
+    }
+    %>
 </div>
 </body>
 </html>

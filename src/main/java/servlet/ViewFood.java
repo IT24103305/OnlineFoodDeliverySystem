@@ -1,7 +1,7 @@
 package servlet;
 
 import model.FoodItem;
-import controller.FoodManager;
+import model.FoodManager;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

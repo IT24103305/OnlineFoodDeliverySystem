@@ -3,41 +3,47 @@ package com.fooddelivery.model;
 import java.time.LocalDateTime;
 
 public class Delivery {
-    private int id;
+    private int delivery_ID;
     private Customer customer;
-    private String dish;
+    private String order_ID;
+    private String address;
     private LocalDateTime orderTime;
-    private boolean cancelled;
+    private String status;
 
-    public Delivery(int id, Customer customer, String dish, LocalDateTime orderTime) {
-        this.id = id;
+    public Delivery(int delivery_ID, Customer customer, String order_ID, String address, LocalDateTime orderTime) {
+        this.delivery_ID = delivery_ID;
         this.customer = customer;
-        this.dish = dish;
+        this.order_ID = order_ID;
+        this.address = address;
         this.orderTime = orderTime;
-        this.cancelled = false;
+        this.status = "Active";
     }
 
-    public int getId() {
-        return id;
+    public int getDelivery_ID() {
+        return delivery_ID;
     }
 
     public Customer getCustomer() {
         return customer;
     }
 
-    public String getDish() {
-        return dish;
+    public String getOrder_ID() {
+        return order_ID;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public LocalDateTime getOrderTime() {
         return orderTime;
     }
 
-    public boolean isCancelled() {
-        return cancelled;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

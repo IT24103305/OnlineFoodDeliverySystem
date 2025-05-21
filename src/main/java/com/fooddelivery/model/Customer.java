@@ -1,18 +1,18 @@
 package com.fooddelivery.model;
 
 public class Customer extends Person {
-    private String address;
+    private String contactNumber;
 
-    public Customer(String name, String address) {
+    public Customer(String name, String contactNumber) {
         super(name);
-        this.address = address;
+        this.contactNumber = contactNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }

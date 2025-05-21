@@ -1,81 +1,260 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Open Sans', sans-serif;
+    background: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    color: #FFFFFF;
+    line-height: 1.6;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(28, 37, 38, 0.85);
+    z-index: -1;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: #FF6200;
+    display: flex;
+    align-items: center;
+}
+
+header h1 i {
+    margin-right: 10px;
+}
+
+header .nav-buttons {
+    display: flex;
+    align-items: center;
+}
+
+header button {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 20px;
+    margin-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+header button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    text-align: center;
 }
 
 h2 {
-    color: #2e7d32;
+    color: #FF6200;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 20px 0;
+table.delivery-table {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto 30px;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #4caf50;
+.delivery-table th,
+.delivery-table td {
+    padding: 15px;
+    text-align: center; /* Center all content */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Define column widths for balance */
+.col-delivery-id {
+    width: 10%;
+}
+.col-customer {
+    width: 15%;
+}
+.col-contact {
+    width: 15%;
+}
+.col-address {
+    width: 15%;
+}
+.col-order-id {
+    width: 10%;
+}
+.col-order-time {
+    width: 25%;
+}
+.col-status {
+    width: 10%;
+}
+
+.delivery-table th {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.1em;
+}
+
+.delivery-table tr {
+    transition: background-color 0.3s;
+}
+
+.delivery-table tr:hover {
+    background-color: rgba(0, 123, 255, 0.15);
+}
+
+.footer-links {
+    margin-top: 20px;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+    margin: 10px;
+    display: inline-block;
+    font-size: 1.1em;
+    padding: 12px 25px;
+    border-radius: 8px;
+    background-color: rgba(0, 123, 255, 0.15);
+    font-weight: 600;
+}
+
+a:hover {
+    background-color: rgba(0, 86, 179, 0.3);
+    color: #0056b3;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #AAAAAA;
+    font-size: 0.9em;
+    margin-top: 20px;
 }
 
 input[type="text"],
 select {
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #2a3334;
+    color: #FFFFFF;
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    max-width: 400px;
     box-sizing: border-box;
 }
 
-button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
+input[type="text"]::placeholder {
+    color: #AAAAAA;
+}
+
+button[type="submit"],
+.order-now-btn {
+    background-color: #FF6200;
+    color: #FFFFFF;
+    padding: 14px 30px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #2e7d32;
-}
-
-table {
+    font-size: 1.2em;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 3px 8px rgba(255, 98, 0, 0.4);
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+button[type="submit"]:hover,
+.order-now-btn:hover {
+    background-color: #e65c00;
+    transform: translateY(-2px);
 }
 
-th {
-    background-color: #4caf50;
-    color: white;
+.welcome-message {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    color: #ddd;
 }
 
-tr:hover {
-    background-color: #f5f5f5;
-}
-
-a {
-    color: #4caf50;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-a:hover {
-    text-decoration: underline;
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+    table.delivery-table {
+        width: 100%;
+        font-size: 0.9em;
+    }
+    .delivery-table th,
+    .delivery-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    /* Hide less critical columns on small screens */
+    .col-address,
+    .col-order-time {
+        display: none;
+    }
+    .col-delivery-id,
+    .col-order-id,
+    .col-status {
+        width: 15%;
+    }
+    .col-customer,
+    .col-contact {
+        width: 35%;
+    }
+    header {
+        flex-direction: column;
+        padding: 15px;
+    }
+    header h1 {
+        margin-bottom: 10px;
+    }
+    header .nav-buttons {
+        justify-content: center;
+    }
+    header button {
+        margin: 5px;
+    }
 }

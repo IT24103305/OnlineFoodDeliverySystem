@@ -15,28 +15,52 @@ import java.util.List;
 public class CancelDeliveryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idStr = request.getParameter("id");
-        int id = Integer.parseInt(idStr);
+        String delivery_IDStr = request.getParameter("delivery_ID");
+        int delivery_ID;
+        try {
+            delivery_ID = Integer.parseInt(delivery_IDStr);
+        } catch (NumberFormatException e) {
+            System.out.println("CancelDeliveryServlet: Invalid delivery_ID format: " + delivery_IDStr);
+            response.sendRedirect("viewDelivery?delivery_ID=" + delivery_IDStr);
+            return;
+        }
 
         List<Delivery> deliveries = (List<Delivery>) request.getSession().getServletContext().getAttribute("deliveries");
-        if (deliveries != null) {
-            for (Delivery delivery : deliveries) {
-                if (delivery.getId() == id) {
-                    if (LocalDateTime.now().isBefore(delivery.getOrderTime().plusMinutes(10))) {
-                        delivery.setCancelled(true);
-                        // Log the cancellation to deliveries.txt
-                        String filePath = "C:\\Users\\dulee\\IdeaProjects\\FoodDeliveryApp\\deliveries.txt";
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-                            writer.write("Delivery Cancelled: ID: " + delivery.getId() + ", DateTime: " + LocalDateTime.now());
-                            writer.newLine();
-                            writer.flush(); // Force the buffer to write to the file immediately
-                        }
+        if (deliveries == null) {
+            System.out.println("CancelDeliveryServlet: No deliveries found in servlet context.");
+            response.sendRedirect("viewDelivery?delivery_ID=" + delivery_ID);
+            return;
+        }
+
+        for (Delivery delivery : deliveries) {
+            if (delivery.getDelivery_ID() == delivery_ID) {
+                LocalDateTime currentTime = LocalDateTime.now();
+                LocalDateTime cutoffTime = delivery.getOrderTime().plusMinutes(10);
+                System.out.println("CancelDeliveryServlet: Current Time=" + currentTime + ", Order Time=" + delivery.getOrderTime() +
+                        ", Cutoff Time=" + cutoffTime);
+                if (currentTime.isBefore(cutoffTime)) {
+                    delivery.setStatus("Cancelled");
+                    System.out.println("CancelDeliveryServlet: Delivery cancelled, delivery_ID=" + delivery_ID);
+                    // Log the cancellation to deliveries.txt
+                    String filePath = "C:\\Users\\dulee\\IdeaProjects\\FoodDeliveryApp\\deliveries.txt";
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+                        String logEntry = "Delivery Cancelled: Order ID: " + delivery.getOrder_ID() +
+                                " | Date & Time: " + currentTime + " | Status: Cancelled";
+                        writer.write(logEntry);
+                        writer.newLine();
+                        writer.flush();
+                        System.out.println("CancelDeliveryServlet: Logged to file: " + logEntry);
+                    } catch (IOException e) {
+                        System.out.println("CancelDeliveryServlet: Error writing to deliveries.txt: " + e.getMessage());
+                        throw new ServletException("Failed to log cancellation", e);
                     }
-                    break;
+                } else {
+                    System.out.println("CancelDeliveryServlet: Cancellation not allowed, time exceeded for delivery_ID=" + delivery_ID);
                 }
+                break;
             }
         }
 
-        response.sendRedirect("viewDelivery?id=" + id);
+        response.sendRedirect("viewDelivery?delivery_ID=" + delivery_ID);
     }
 }

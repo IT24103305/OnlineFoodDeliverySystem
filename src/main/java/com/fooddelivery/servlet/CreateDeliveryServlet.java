@@ -14,18 +14,41 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class CreateDeliveryServlet extends HttpServlet {
-    private static int deliveryIdCounter = 1;
+    private static int delivery_IDCounter = 1;
+    private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final Random random = new Random();
+
+    // Method to generate a random order_ID in the format "XX###" (2 letters + 3 numbers)
+    private String generateOrderID() {
+        StringBuilder letters = new StringBuilder();
+        for (int i = 0; i < 2; i++) {
+            letters.append(LETTERS.charAt(random.nextInt(LETTERS.length())));
+        }
+        int numbers = random.nextInt(1000);
+        String formattedNumbers = String.format("%03d", numbers);
+        return letters.toString() + formattedNumbers;
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String address = request.getParameter("address");
-        String dish = request.getParameter("dish");
+        String contactNumber = request.getParameter("contactNumber");
 
-        Customer customer = new Customer(name, address);
-        Delivery delivery = new Delivery(deliveryIdCounter++, customer, dish, LocalDateTime.now());
+        // Validate contact number
+        if (contactNumber == null || contactNumber.trim().isEmpty() || !contactNumber.matches(".*\\d{7,}.*")) {
+            request.setAttribute("error", "Please enter a valid contact number (at least 7 digits).");
+            request.getRequestDispatcher("/jsp/createDelivery.jsp").forward(request, response);
+            return;
+        }
+
+        String order_ID = generateOrderID();
+
+        Customer customer = new Customer(name, contactNumber);
+        Delivery delivery = new Delivery(delivery_IDCounter++, customer, order_ID, address, LocalDateTime.now());
 
         HttpSession session = request.getSession();
         List<Delivery> deliveries = (List<Delivery>) session.getServletContext().getAttribute("deliveries");
@@ -38,12 +61,13 @@ public class CreateDeliveryServlet extends HttpServlet {
         // Log to file with absolute path
         String filePath = "C:\\Users\\dulee\\IdeaProjects\\FoodDeliveryApp\\deliveries.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.write("ID: " + delivery.getId() + ", Customer: " + name + ", Address: " + address +
-                    ", Dish: " + dish + ", DateTime: " + delivery.getOrderTime());
+            writer.write("Delivery ID: " + delivery.getDelivery_ID() + " | Customer: " + name + " | Contact Number: " + contactNumber +
+                    " | Address: " + address + " | Order ID: " + order_ID + " | Date & Time: " + delivery.getOrderTime() +
+                    " | Status: " + delivery.getStatus());
             writer.newLine();
-            writer.flush(); // Force the buffer to write to the file immediately
+            writer.flush();
         }
 
-        response.sendRedirect("viewDelivery?id=" + delivery.getId());
+        response.sendRedirect("viewDelivery?delivery_ID=" + delivery.getDelivery_ID());
     }
 }

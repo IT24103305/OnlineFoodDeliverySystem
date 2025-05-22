@@ -7,6 +7,11 @@
 
   <display-name>Food Delivery Management</display-name>
 
+  <context-param>
+    <param-name>contextPath</param-name>
+    <param-value>/food-delivery</param-value>
+  </context-param>
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>

@@ -1,5 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<head>
+    <title>Food Delivery</title>
+    <meta http-equiv="refresh" content="0; url=reviews">
+</head>
 <body>
-<h2>Hello World!</h2>
+    Redirecting to reviews page...
 </body>
 </html>
